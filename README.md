@@ -9,10 +9,15 @@
 ### 팀원 프로필
 
 최환석(BeeMOre32): [Github](https://github.com/BeeMOre32)
+
 장화현 : [github](https://github.com/janghwahyun)
+
 조승혜 : [github](https://github.com/tmdgp0212)
+
 정윤조 : [github](https://github.com/jyj1111)
+
 정소진 : [github](https://github.com/thwls475)
+
 김민기 : [github](https://github.com/minki-dev)
 
 ### 프로젝트의 기능구현 사항
