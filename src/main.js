@@ -85,7 +85,47 @@ getMasterSoldList.addEventListener("click", async () => {
 });
 
 postMasterProductEl.addEventListener("click", async () => {
-  const data = { title: "test", price: 1000, description: "test" };
+  const data = { 
+    title: "", 
+    price: 1090000, 
+    description: JSON.stringify({
+      "desc1": {
+        "main-desc": "",
+        "sub-desc": ""
+      },
+      "desc2": {
+        "main-desc": "",
+        "sub-desc": ""
+      }
+    }),
+    tags: ["bed", "best", "new"],
+    thumbnailBase64: "",
+    photoBase64: ""
+  };
+
+  if (data.title === "") {
+    console.log("empty title")
+    return
+  }
+ 
+  //데이터 포맷 예시
+  const sampledata = {
+    title: "가구이름",
+    price: 10000,
+    description: JSON.stringify({
+      "desc1": {
+        "main-desc": "감성을 채우는 인테리어 침대",
+        "sub-desc": "에스테틱 침대는 그저 그런 가구가 아닙니다. 별도의 복잡한 공사 없이 배치하는 것으로 새로운 침실 인테리어를 선사합니다."
+      },
+      "desc2": {
+        "main-desc": "워너비 인테리어 침대 모듈",
+        "sub-desc": "침실 워너비 인테리어 니즈 4가지 모듈 구성!에스테틱은 SS,Q,LK,KK 전 사이즈 침대를 운영하여 매트리스 호환성을 높였습니다."
+      }
+    }),
+    tags: ["bed", "new" , "best" , "sale"],
+    humbnailBase64: "",
+    hotoBase64: ""
+  }
 
   const res = await postMasterProduct(data);
   console.log(res);
