@@ -165,9 +165,6 @@ deleteMasterProductEl.addEventListener("click", async () => {
   console.log(products[0].id);
   const res = await deleteMasterProduct(products[0].id);
   console.log(res);
-<<<<<<< HEAD
-});
-=======
 });
 
 getProductDetailEL.addEventListener("click", async () => {
@@ -218,4 +215,3 @@ getBuyDetailEl.addEventListener("click", async () => {
   const res = await getBuyDetail(access, buyList[1].detailId);
   console.log(res);
 });
->>>>>>> 0b86afba394d33a65935460bd726eb712379b96c
