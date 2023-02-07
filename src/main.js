@@ -4,6 +4,7 @@ import {
   getBankAccount,
   getCurrentAccount,
   logIn,
+  userLogOut,
 } from "./utilities/userapi";
 import {
   deleteMasterProduct,
@@ -21,7 +22,10 @@ import {
   getProductDetail,
   searchProduct,
 } from "./utilities/productapi";
+import { afterLoadUserAuth, userToken } from "./utilities/userAuth";
+
 const loginEl = document.querySelector(".login");
+const logoutEl = document.querySelector(".logout");
 const getBankEl = document.querySelector(".get-bank");
 const bankAccountEl = document.querySelector(".get-bank-account");
 const addBankEl = document.querySelector(".add-bank");
@@ -42,6 +46,9 @@ const getBuyDetailEl = document.querySelector(".get-buy-detail");
 let access = "";
 let products = [];
 let buyList = [];
+
+afterLoadUserAuth().then((r) => console.log(r));
+
 loginEl.addEventListener("click", async () => {
   const email = "abc@gmail.com";
   const password = "123456789";
@@ -49,10 +56,14 @@ loginEl.addEventListener("click", async () => {
   const data = { email, password };
 
   const res = await logIn(data);
-  access = res.accessToken;
+  userToken.token = res.accessToken;
   console.log(res);
 });
 
+logoutEl.addEventListener("click", async () => {
+  const res = await userLogOut(userToken.token);
+  console.log(res);
+});
 getBankEl.addEventListener("click", async () => {
   const res = await getBankAccount(access);
   console.log(res);
@@ -91,33 +102,24 @@ delBankEl.addEventListener("click", async () => {
 });
 
 getMasterProduct.addEventListener("click", async () => {
-  const res = await getMasterProductList(access);
+  const res = await getMasterProductList();
   products = res;
   console.log(res);
 });
 
 getMasterSoldList.addEventListener("click", async () => {
-  const res = await getMasterAllSoldList(access);
+  const res = await getMasterAllSoldList();
   console.log(res);
 });
 
 postMasterProductEl.addEventListener("click", async () => {
-  const data = { 
-    title: "", 
-    price: 1000, 
-    description: JSON.stringify({
-      "desc1": {
-        "main-desc": "",
-        "sub-desc": ""
-      },
-      "desc2": {
-        "main-desc": "",
-        "sub-desc": ""
-      }
-    }),
-    tags: ["bed", "best", "new"],
-    thumbnailBase64: "",
-    photoBase64: ""
+  const data = {
+    title: "",
+    price: 10000,
+    description: "",
+    tags: ["bed", "new" , "best" , "sale"],
+    humbnailBase64: "",
+    hotoBase64: ""
   };
 
   if (data.title === "") {
@@ -129,16 +131,7 @@ postMasterProductEl.addEventListener("click", async () => {
   const sampledata = {
     title: "가구이름",
     price: 10000,
-    description: JSON.stringify({
-      "desc1": {
-        "main-desc": "감성을 채우는 인테리어 침대",
-        "sub-desc": "에스테틱 침대는 그저 그런 가구가 아닙니다. 별도의 복잡한 공사 없이 배치하는 것으로 새로운 침실 인테리어를 선사합니다."
-      },
-      "desc2": {
-        "main-desc": "워너비 인테리어 침대 모듈",
-        "sub-desc": "침실 워너비 인테리어 니즈 4가지 모듈 구성!에스테틱은 SS,Q,LK,KK 전 사이즈 침대를 운영하여 매트리스 호환성을 높였습니다."
-      }
-    }),
+    description: "",
     tags: ["bed", "new" , "best" , "sale"],
     humbnailBase64: "",
     hotoBase64: ""
