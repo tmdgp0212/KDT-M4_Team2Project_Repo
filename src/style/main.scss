@@ -45,16 +45,12 @@
     width: $max-width;
     margin: 0 auto;
 
-    h2 {
-      @include title-font();
-      text-align: center;
-      margin: 100px 0;
-    }
-
     .new-items {
 
       h2 {
+        @include title-font();
         text-align: center;
+        margin: 100px 0;
       }
 
       .swiper {
@@ -123,6 +119,12 @@
       display: flex;
       flex-direction: column;
       margin: 150px 0 80px;
+
+      h2 {
+        @include title-font();
+        text-align: center;
+        margin: 100px 0;
+      }
 
 
       .recommend-item {
