@@ -8,7 +8,7 @@
  * @returns {Promise<Object>} - 회원가입 결과 및 토큰
  * */
 export async function signIn(data) {
-  const res = await fetch("api/account/signin", {
+  const res = await fetch("/api/account/signin", {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -23,7 +23,7 @@ export async function signIn(data) {
  * @returns {Promise<Object>} - 로그인 결과 및 토큰
  * */
 export async function logIn(data) {
-  const res = await fetch("api/account/login", {
+  const res = await fetch("/api/account/login", {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -36,7 +36,7 @@ export async function logIn(data) {
  * @returns {Promise<Object>} - 로그인 결과 및 토큰
  * */
 export async function userAuth(access) {
-  const res = await fetch("api/account/auth", {
+  const res = await fetch("/api/account/auth", {
     method: "POST",
     headers: {
       authorization: "Bearer " + access,
@@ -51,7 +51,7 @@ export async function userAuth(access) {
  * @returns {Promise<Boolean>} - 로그아웃 결과
  * */
 export async function userLogOut(access) {
-  const res = await fetch("api/account/logout", {
+  const res = await fetch("/api/account/logout", {
     method: "POST",
     headers: {
       authorization: "Bearer " + access,
@@ -70,7 +70,7 @@ export async function userLogOut(access) {
  * @param {String} data.user.newPassword - 유저 비밀번호 확인
  * */
 export async function userInfoEdit(data) {
-  const res = await fetch("api/account/userinfoedit", {
+  const res = await fetch("/api/account/userinfoedit", {
     method: "PUT",
     headers: { authorization: "Bearer " + data.userToken },
     body: JSON.stringify(data.user),
@@ -85,7 +85,7 @@ export async function userInfoEdit(data) {
  * @returns {Promise<Array[Object]>} - 계좌 목록
  *  */
 export async function getBankAccount(access) {
-  const res = await fetch("api/bank/getbankaccount", {
+  const res = await fetch("/api/bank/getbankaccount", {
     method: "GET",
     headers: {
       authorization: "Bearer " + access,
@@ -100,7 +100,7 @@ export async function getBankAccount(access) {
  * @returns {Promise<Array[Object]>} - 현재 계좌
  * */
 export async function getCurrentAccount(access) {
-  const res = await fetch("api/bank/getcurrentaccount", {
+  const res = await fetch("/api/bank/getcurrentaccount", {
     method: "GET",
     headers: {
       authorization: "Bearer " + access,
@@ -121,7 +121,7 @@ export async function getCurrentAccount(access) {
  * @returns {Promise<Object>} - 생성된 계좌의 정보
  * */
 export async function addBankAccount(data) {
-  const res = await fetch("api/bank/addbankaccount", {
+  const res = await fetch("/api/bank/addbankaccount", {
     method: "POST",
     headers: {
       authorization: "Bearer " + data.userToken,
@@ -141,7 +141,7 @@ export async function addBankAccount(data) {
  * @returns {Promise<Boolean>} - 삭제 결과
  * */
 export async function deleteBankAccount(data) {
-  const res = await fetch("api/bank/deletebankaccount", {
+  const res = await fetch("/api/bank/deletebankaccount", {
     method: "DELETE",
     headers: {
       authorization: "Bearer " + data.userToken,
