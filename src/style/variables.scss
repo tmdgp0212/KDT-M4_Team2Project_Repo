@@ -1,12 +1,12 @@
 /* 변수 */
 
 // 페이지의 최대너비지정
-$max-width: 1420px; 
+$max-width: 1420px;
 
 // 테마색상
-$dark-gray: #292C43;
-$primary-color: #8083A3;
-$light-gray: #E4E6E8;
+$dark-gray: #292c43;
+$primary-color: #8083a3;
+$light-gray: #e4e6e8;
 
 //폰트크기
 @mixin title-font {
@@ -14,7 +14,6 @@ $light-gray: #E4E6E8;
   font-weight: 600;
   line-height: 1.5;
 }
-
 
 /* 디자인 */
 
@@ -24,14 +23,14 @@ button {
   border: none;
   padding: 0;
   cursor: pointer;
-  
+
   // 기본버튼
   &.common-btn {
     padding: 8px 20px;
-    font-family: 'Pretendard-Regular';
+    font-family: "Pretendard-Regular";
     background-color: $light-gray;
     border-radius: 3px;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
       background-color: darken($light-gray, 5%);
@@ -41,14 +40,19 @@ button {
   // 진한 버튼
   &.darken-btn {
     padding: 8px 20px;
-    font-family: 'Pretendard-Regular';
+    font-family: "Pretendard-Regular";
     color: #fff;
     background-color: $primary-color;
     border-radius: 3px;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
       background-color: darken($primary-color, 5%);
     }
   }
+}
+
+// 숨김 처리 할때
+.hidden {
+  display: none;
 }

@@ -1,6 +1,7 @@
 import Navigo from "navigo";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
+import { renderMasterProductDetailPage } from "./page/masterproductdetail";
 
 export const router = new Navigo("/");
 const app = document.querySelector("#app");
@@ -13,7 +14,7 @@ router.on("/search/:query", function (params) {
   console.log(params.query);
 });
 
-router.on("/product/:productId", function (params) {
+router.on("/product/detail/:productId", function (params) {
   console.log(params.query);
 });
 
@@ -39,6 +40,10 @@ router.on("/login", function () {
 
 router.on("/master", function () {
   renderMasterPage();
+});
+
+router.on("/master/product/detail/:id", function (match) {
+  renderMasterProductDetailPage(match.data.id);
 });
 
 router.on("/master/product/add", function () {
