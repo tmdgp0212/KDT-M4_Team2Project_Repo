@@ -126,16 +126,6 @@ postMasterProductEl.addEventListener("click", async () => {
     console.log("empty title")
     return
   }
- 
-  //데이터 포맷 예시
-  const sampledata = {
-    title: "가구이름",
-    price: 10000,
-    description: "",
-    tags: ["bed", "new" , "best" , "sale"],
-    humbnailBase64: "",
-    hotoBase64: ""
-  }
 
   const res = await postMasterProduct(data);
   console.log(res);
