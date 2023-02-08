@@ -2,6 +2,7 @@ import Navigo from "navigo";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main"
+import { renderDetailPage } from "./page/productDetail"; 
 
 export const router = new Navigo("/");
 const app = document.querySelector("#app");
@@ -12,6 +13,10 @@ router.on("/", function () {
 
 router.on("/search/:query", function (params) {
   console.log(params.query);
+});
+
+router.on("/detail/:productId", function (params) {
+  renderDetailPage(params);
 });
 
 router.on("/product/:productId", function (params) {
