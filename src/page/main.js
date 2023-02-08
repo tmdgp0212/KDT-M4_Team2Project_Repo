@@ -172,7 +172,7 @@ export function renderMainPage() {
   }
 
   function routeDetailPage(id) {
-    router.navigate(`/detail/${id}`);
+    router.navigate(`/product/detail/${id}`);
   }
 
   new Swiper(visualSliderEl, {

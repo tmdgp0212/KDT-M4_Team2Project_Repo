@@ -123,7 +123,7 @@ export async function renderDetailPage(params) {
       descEl.append(tagsEl, itemNameEl, priceEl);
 
       divEl.addEventListener('click', () => {
-        router.navigate(`/detail/${item.id}`);
+        router.navigate(`/product/detail/${item.id}`);
       });
     });
   
@@ -132,7 +132,7 @@ export async function renderDetailPage(params) {
 
   new Swiper(swiperEl, {
     modules: [Navigation],
-    slidesPerView : auto,
+    slidesPerView : 4,
     spaceBetween: 35,
     navigation: {
       nextEl: ".swiper-button-next",
