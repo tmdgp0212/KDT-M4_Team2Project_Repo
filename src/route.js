@@ -2,6 +2,7 @@ import Navigo from "navigo";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main"
+import { renderDetailPage } from "./page/productDetail"; 
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
 
 export const router = new Navigo("/");
@@ -16,7 +17,7 @@ router.on("/search/:query", function (params) {
 });
 
 router.on("/product/detail/:productId", function (params) {
-  console.log(params.query);
+  renderDetailPage(params);
 });
 
 router.on("/product/cart", function () {
@@ -52,14 +53,3 @@ router.on("/master/product/add", function () {
 });
 
 router.resolve();
-
-
-// 공통JS
-const searchEl = document.querySelector('header form');
-const inputEl = document.querySelector('header input');
-
-searchEl.addEventListener('submit', evt => {
-  evt.preventDefault();
-  if(inputEl.value === "") return ;
-  router.navigate(`/search/${inputEl.value}`);
-})
