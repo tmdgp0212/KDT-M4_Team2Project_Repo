@@ -17,9 +17,9 @@
 }
 
 #app {
-  
+
   .visual {
-    
+
     .swiper-wrapper {
 
       .swiper-slide {
@@ -29,7 +29,7 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        
+
         @for $i from 1 through 4 {
           &:nth-child(#{$i}) {background-image: url('../images/main_visual#{$i}.jpg');}
         }
@@ -39,13 +39,14 @@
     .swiper-pagination-bullet-active {
       --swiper-theme-color: #222;
     }
-  }
-  
+  }//.visual
+
   section {
     width: $max-width;
     margin: 0 auto;
 
     .new-items {
+      text-align: center;
 
       h2 {
         @include title-font();
@@ -118,7 +119,7 @@
     .recommend {
       display: flex;
       flex-direction: column;
-      margin: 150px 0 80px;
+      margin: 150px 0;
 
       h2 {
         @include title-font();
@@ -134,7 +135,7 @@
         gap: 40px;
         width: 70%;
         margin-bottom: 100px;
-        
+
         &.reverse {
           align-self: flex-end;
           img {
@@ -158,13 +159,14 @@
           padding: 30px 0;
 
           h3 {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 600;
           }
 
           p {
             font-size: 18px;
             line-height: 1.4;
+            font-weight: 600;
             word-break: keep-all;
           }
 
@@ -173,7 +175,7 @@
             margin-left: 75%;
           }
         }
-      }//.recommend-item
-    }//.recommend
+      }//.recommand-item
+    }//.recommand
   }//section
 }//#app
