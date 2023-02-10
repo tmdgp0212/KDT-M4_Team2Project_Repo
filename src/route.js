@@ -1,9 +1,10 @@
 import Navigo from "navigo";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
-import { renderMainPage } from "./page/main"
-import { renderDetailPage } from "./page/productDetail"; 
+import { renderMainPage } from "./page/main";
+import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
+import { renderSoldProduct } from "./page/mastersoldlist";
 
 export const router = new Navigo("/");
 const app = document.querySelector("#app");
@@ -50,6 +51,10 @@ router.on("/master/product/detail/:id", function (match) {
 
 router.on("/master/product/add", function () {
   renderAddProduct();
+});
+
+router.on("/master/sold", function () {
+  renderSoldProduct();
 });
 
 router.resolve();
