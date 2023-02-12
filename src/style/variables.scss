@@ -7,6 +7,7 @@ $max-width: 1420px;
 $dark-gray: #292c43;
 $primary-color: #8083a3;
 $light-gray: #e4e6e8;
+$soft-red: #ED544E;
 
 //폰트크기
 @mixin title-font {
@@ -74,6 +75,19 @@ button {
 
     &:hover {
       background-color: darken($primary-color, 5%);
+    }
+  }
+
+  &.red-btn {
+    padding: 8px 20px;
+    font-family: "Pretendard-Regular";
+    color: #fff;
+    background-color: $soft-red;
+    border-radius: 3px;
+    transition: 0.2s;
+
+    &:hover{
+      background-color: darken($soft-red, 5%);
     }
   }
 }
