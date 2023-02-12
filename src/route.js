@@ -31,7 +31,7 @@ router.on("/product/checkout", function () {
   console.log("checkout");
 });
 
-router.on("/mypage/orderhistory", function (params) {
+router.on("/mypage/orderHistory", function (params) {
   renderOrderHisory(params);
 });
 
