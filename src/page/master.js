@@ -36,7 +36,7 @@ export async function renderMasterPage() {
 
   masterPage.append(
     masterPageTitle,
-    await renderProductList(page, true, masterPage, $),
+    await renderProductList(page, true, masterPage),
     addProductBtn,
     soldProductBtn
   );
