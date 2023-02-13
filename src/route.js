@@ -5,6 +5,7 @@ import { renderMainPage } from "./page/main";
 import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
 import { renderSoldProduct } from "./page/mastersoldlist";
+import { renderAllProducts } from "./page/allproducts";
 
 export const router = new Navigo("/");
 const app = document.querySelector("#app");
@@ -19,6 +20,18 @@ router.on("/search/:query", function (params) {
 
 router.on("/product/detail/:productId", function (params) {
   renderDetailPage(params);
+});
+
+router.on("/product/all", function () {
+  renderAllProducts("all");
+});
+
+router.on("/product/best", function () {
+  renderAllProducts("best");
+});
+
+router.on("/product/new", function () {
+  renderAllProducts("new");
 });
 
 router.on("/product/cart", function () {
