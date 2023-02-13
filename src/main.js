@@ -5,6 +5,7 @@ import {
   getCurrentAccount,
   logIn,
   userLogOut,
+  userToken,
 } from "./utilities/userapi";
 import {
   deleteMasterProduct,
@@ -153,13 +154,13 @@ searchProductEl.addEventListener("click", async () => {
 
 buyProductEl.addEventListener("click", async () => {
   const data = {
-    userToken: access,
+    userToken: userToken._token,
     info: {
-      productId: "3fxhvQ3ilU5LXIbkjGfp",
+      productId: "y2aUHChiZght5WELD73T",
       accountId: "U9tTlCcON8ZuRmEdV8jJ",
     },
   };
-
+  console.log(data);
   const res = await buyProduct(data);
   console.log(res);
 });
