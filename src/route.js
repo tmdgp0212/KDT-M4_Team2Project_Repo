@@ -1,4 +1,6 @@
 import Navigo from "navigo";
+import { renderCash } from "./page/cash";
+import { renderCart } from "./page/cartpage/cart";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main";
@@ -22,11 +24,11 @@ router.on("/product/detail/:productId", function (params) {
 });
 
 router.on("/product/cart", function () {
-  console.log("cart");
+  renderCart();
 });
 
 router.on("/product/checkout", function () {
-  console.log("checkout");
+  renderCash();
 });
 
 router.on("/mypage", function () {
