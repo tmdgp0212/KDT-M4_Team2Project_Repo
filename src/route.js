@@ -6,6 +6,7 @@ import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
 import { renderSoldProduct } from "./page/mastersoldlist";
 import { renderAllProducts } from "./page/allproducts";
+import { renderSearchPage } from "./page/search";
 
 export const router = new Navigo("/");
 const app = document.querySelector("#app");
@@ -16,6 +17,7 @@ router.on("/", function () {
 
 router.on("/search/:query", function (params) {
   console.log(params.query);
+  renderSearchPage();
 });
 
 router.on("/product/detail/:productId", function (params) {
