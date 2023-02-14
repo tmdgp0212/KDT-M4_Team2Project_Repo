@@ -4,6 +4,8 @@ import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main";
 import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
+import { renderOrderHisory, renderMyAccount } from "./page/mypage";
+
 import { renderSoldProduct } from "./page/mastersoldlist";
 import { renderAllProducts } from "./page/allproducts";
 
@@ -42,12 +44,12 @@ router.on("/product/checkout", function () {
   console.log("checkout");
 });
 
-router.on("/mypage", function () {
-  app.innerHTML = `<h1>My Page</h1>`;
+router.on("/mypage/orderHistory", function (params) {
+  renderOrderHisory(params);
 });
 
-router.on("/mypage/bank", function () {
-  console.log("mypage/bank");
+router.on("/mypage/account", function (params) {
+  renderMyAccount(params);
 });
 
 router.on("/login", function () {
