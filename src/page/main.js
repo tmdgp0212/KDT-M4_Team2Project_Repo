@@ -38,7 +38,7 @@ export function renderMainPage() {
         <span class="loading">loading</span>
       </div>
 
-      <div class="recommend">
+      <div class="main--recommend">
         <h2>이런 가구 어때요?</h2>
         <span class="loading">loading</span>
       </div>
@@ -49,7 +49,7 @@ export function renderMainPage() {
   const visualSliderEl = document.querySelector('.visual .swiper');
   const newItemSliderEl = document.querySelector('.new-items .swiper');
   const newItemSliderWrapperEl = newItemSliderEl.querySelector('.swiper-wrapper');
-  const recommendEl = document.querySelector('.recommend');
+  const recommendEl = document.querySelector('.main--recommend');
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -81,13 +81,17 @@ export function renderMainPage() {
       console.log(res);
   
       renderNewItems(res)
-      renderRecommendItems(res[0])
-      renderRecommendItems(res[1],true)
+
+      const bestItems = res.filter((item) => item.tags.includes('best'))
+      renderRecommendItems(bestItems[0])
+      renderRecommendItems(bestItems[1],true)
+
     }
   )();
   
   function renderNewItems(items) {
     items = items.filter((item) =>  item.tags.includes('new'));
+    items.splice(12, );
     const loadingEl = document.querySelector('.new-items .loading')
   
     items.forEach((item) => {
@@ -99,7 +103,7 @@ export function renderMainPage() {
       const priceEl = document.createElement('span');
   
       itemNameEl.textContent = item.title;
-      priceEl.textContent = `￦ ${item.price.toLocaleString()}`;
+      priceEl.textContent = item.isSoldOut ? '￦ 품절되었습니다' : `￦ ${item.price.toLocaleString()}`;
     
       thumbnailEl.style.backgroundImage = `url(${item.thumbnail})`;
   
@@ -134,7 +138,7 @@ export function renderMainPage() {
   
   async function renderRecommendItems(item, isReverse) {
     const itemDetail = await getProductDetail(item.id);
-    const loadingEl = document.querySelector('.recommend .loading')
+    const loadingEl = document.querySelector('.main--recommend .loading')
   
     const recommendItemEl = document.createElement('div');
     const thumbnailEl = document.createElement('img');
