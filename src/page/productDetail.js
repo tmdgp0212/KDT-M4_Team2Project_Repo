@@ -13,11 +13,9 @@ import "swiper/modules/navigation/navigation-element.min.css";
 export async function renderDetailPage(params) {
   const app = document.getElementById("app");
   const product = await getProductDetail(params.data.productId);
-
   window.scrollTo({ top: 0, behavior: "smooth" });
-
-  app.innerHTML = /* html */ `
-    <div class="container">
+  app.innerHTML = /* html */`
+    <div class="container product-detail-page">
       <div class="main">
         <img class="thumbnail" src="${product.thumbnail}" alt="thumbnail">
 
@@ -71,7 +69,7 @@ export async function renderDetailPage(params) {
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
         </div>
-        <span class="loading">loading</span>
+        <span class="loading"></span>
       </div>
     </div>
 
@@ -159,13 +157,12 @@ export async function renderDetailPage(params) {
   })();
 
   function renderRecommendItems(items) {
-    const loadingEl = document.querySelector(".recommend .loading");
-    items = items.filter(
-      (item) => item.tags[0] === product.tags[0] && item.id !== product.id
-    );
-
-    if (items.length === 0) {
-      noItemEl.textContent = "일치하는 제품이 없습니다";
+    const loadingEl = document.querySelector('.recommend .loading')
+    items = items.filter((item) =>  item.tags[0] === product.tags[0] && item.id !== product.id);
+    items.splice(12, );
+    
+    if(items.length === 0) {
+      noItemEl.textContent ="일치하는 제품이 없습니다"
       loadingEl.remove();
       return;
     }
