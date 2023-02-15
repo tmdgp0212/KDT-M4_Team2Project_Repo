@@ -21,5 +21,6 @@ export async function renderSearchPage(params) {
   `;
 
   const matchItems = await searchProduct({searchText});
-  console.log(matchItems);
+  
+  matchItems.forEach(() => {})
 }

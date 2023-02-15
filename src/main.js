@@ -5,6 +5,7 @@ import {
   getCurrentAccount,
   logIn,
   userLogOut,
+  userToken,
 } from "./utilities/userapi";
 import {
   deleteMasterProduct,
@@ -76,10 +77,10 @@ bankAccountEl.addEventListener("click", async () => {
 
 addBankEl.addEventListener("click", async () => {
   const data = {
-    userToken: access,
+    userToken: userToken._token,
     account: {
-      bankCode: "088",
-      accountNumber: "123456789012",
+      bankCode: "081",
+      accountNumber: "51912345612345",
       phoneNumber: "01012345678",
       signature: true,
     },
@@ -153,13 +154,13 @@ searchProductEl.addEventListener("click", async () => {
 
 buyProductEl.addEventListener("click", async () => {
   const data = {
-    userToken: access,
+    userToken: userToken._token,
     info: {
-      productId: "3fxhvQ3ilU5LXIbkjGfp",
+      productId: "y2aUHChiZght5WELD73T",
       accountId: "U9tTlCcON8ZuRmEdV8jJ",
     },
   };
-
+  console.log(data);
   const res = await buyProduct(data);
   console.log(res);
 });
