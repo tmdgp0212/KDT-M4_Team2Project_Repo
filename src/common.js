@@ -1,13 +1,27 @@
-const searchEl = document.querySelector("header form");
-const inputEl = document.querySelector("header input");
-const cartCountEl = document.querySelector(".cart-count");
+import { afterLoadUserAuth } from "./utilities/userAuth";
+import { router } from "./route";
 
-searchEl.addEventListener("submit", (evt) => {
+const searchEl = document.querySelector('header form');
+const inputEl = document.querySelector('header input');
+const loginEl = document.querySelector('header .login');
+const cartCountEl =  document.querySelector('header .cart .cart-count');
+
+const userAuth = afterLoadUserAuth();
+
+searchEl.addEventListener('submit', evt => {
   evt.preventDefault();
-  if (inputEl.value === "") return;
+  if(inputEl.value === "") return ;
   router.navigate(`/search/${inputEl.value}`);
 });
 
-if (localStorage.getItem("cart")) {
-  cartCountEl.textContent = JSON.parse(localStorage.getItem("cart")).length;
+loginEl.addEventListener('click', () => {
+  if(typeof userAuth === 'string') {
+    return router.navigate('/login');
+  } else {
+    return router.navigate('/mypage');
+  }
+})
+
+if ( localStorage.getItem('cart') ) {
+  cartCountEl.textContent = JSON.parse(localStorage.getItem('cart')).length;
 }
