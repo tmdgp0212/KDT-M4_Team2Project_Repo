@@ -132,6 +132,7 @@ export async function renderDetailPage(params) {
   });
 
   modalCartBtnEl.addEventListener("click", () => {
+    document.body.style.overflow = "unset";
     router.navigate("/product/cart");
   });
 
