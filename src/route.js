@@ -1,4 +1,5 @@
 import Navigo from "navigo";
+import { CommonFn } from "./common";
 import { renderCash } from "./page/cash";
 import { renderCart } from "./page/cart";
 import { renderMasterPage } from "./page/master";
@@ -19,67 +20,82 @@ export const router = new Navigo("/");
 const app = document.querySelector("#app");
 
 router.on("/", function () {
+  CommonFn();
   renderMainPage();
 });
 
 router.on("/search/:query", function (params) {
-  console.log(params.query);
-  renderSearchPage();
+  CommonFn();
+  renderSearchPage(params);
 });
 
 router.on("/product/detail/:productId", function (params) {
+  CommonFn();
   renderDetailPage(params);
 });
 
 router.on("/product/all", function () {
+  CommonFn();
   renderAllProducts("all");
 });
 
 router.on("/product/best", function () {
+  CommonFn();
   renderAllProducts("best");
 });
 
 router.on("/product/new", function () {
+  CommonFn();
   renderAllProducts("new");
 });
 
 router.on("/product/cart", function () {
+  CommonFn();
   renderCart();
 });
 
 router.on("/product/checkout", function () {
+  CommonFn();
   renderCash();
 });
 
 router.on("/mypage/orderHistory", function (params) {
+  CommonFn();
   renderOrderHisory(params);
 });
 
 router.on("/mypage/account", function (params) {
+  CommonFn();
   renderMyAccount(params);
 });
 
 router.on("/login", function () {
+  CommonFn();
   renderLoginPage()
 });
 
 router.on("/signup", function () {
+  CommonFn();
   renderSignUp()
 });
 
 router.on("/master", function () {
+  CommonFn();
   renderMasterPage();
 });
 
 router.on("/master/product/detail/:id", function (match) {
+  CommonFn();
   renderMasterProductDetailPage(match.data.id);
 });
 
 router.on("/master/product/add", function () {
+  CommonFn();
   renderAddProduct();
 });
 
 router.on("/master/sold", function () {
+  CommonFn();
   renderSoldProduct();
 });
 
