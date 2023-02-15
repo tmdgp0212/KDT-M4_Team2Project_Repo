@@ -1,5 +1,5 @@
 import "../style/login.scss"
-// import {handler} from "./api/login";
+import { logIn } from "../utilities/userapi"
 
 // 초기세팅
 // const loginTemplate = <div id="login"></div>
@@ -16,7 +16,7 @@ export function renderLoginPage() {
       <h5>Enter your details to proceed futher</h5>
       <form>
         <div class="form-control">
-          <input type="text" required>
+          <input type="text" id="email" required>
           <label>
             <span >E</span>
             <span >M</span>
@@ -37,14 +37,12 @@ export function renderLoginPage() {
           <span>O</span>
           <span>R</span>
           <span>D</span>
-          
-          
         </label>   
       </div>
 
-        <button class="btn">Login</button>
-
-        <p class="text">Don't have an account? <a href="#">Resister</a></p>
+        <button type ="button" id="loginBtn" class="btn" onclick="checkTheEmail()">Login</button>
+          
+        <p class="text">Don't have an account? <a data-navigo href="/signup">Resister</a></p>
       </form>
     </div>
   `
@@ -67,15 +65,48 @@ labels.forEach(label => {
         .join('')
 })
 
+// LOGIN API
+const loginBtnEl = document.querySelector("#loginBtn")
+loginBtnEl.addEventListener("click", async () => {
+  const email = "abc@gmail.com"
+  const password = "123456789"
+
+  const data = { email, password }
+
+  const res = await logIn(data)
+  userToken.token = res.accessToken
+  console.log(res)
+});
+
+// 이메일 유효성 검사 함수
+checkTheEmail = function ()                
+  {                                           
+	const emailEl = document.querySelector("#email")
+	if (!emailEl.value) {             
+		alert("이메일을 입력하세요!")
+		emailEl.focus()
+		return
+	}              
+	else   {          
+		if(!CheckEmail(emailEl.value))	{
+			alert("이메일 형식이 잘못되었습니다")
+			emailEl.focus()
+			return;
+		}                
+	}                      
+}    
+
 // CHECK EMAIL FORM
-  function CheckEmail(str){ 
-    var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-    if(!reg_email.test(str)) {                            
-      return false;         
-    }                            
-    else {                       
-      return true;         
-    }                            
-}             
+function CheckEmail(str){ 
+  const reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/
+  if(!reg_email.test(str)) {                            
+    return false         
+  }                            
+  else {                       
+    return true         
+  }                            
+} 
+
+
 }
 
