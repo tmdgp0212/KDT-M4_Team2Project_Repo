@@ -6,6 +6,9 @@ import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main";
 import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
+
+import { renderLoginPage } from "./page/login";
+import { renderSignUp } from "./page/signup";
 import { renderOrderHisory, renderMyAccount } from "./page/mypage";
 
 import { renderSoldProduct } from "./page/mastersoldlist";
@@ -57,7 +60,11 @@ router.on("/mypage/account", function (params) {
 });
 
 router.on("/login", function () {
-  console.log("login");
+  renderLoginPage()
+});
+
+router.on("/signup", function () {
+  renderSignUp()
 });
 
 router.on("/master", function () {
