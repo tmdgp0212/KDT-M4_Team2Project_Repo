@@ -1,11 +1,19 @@
 import Navigo from "navigo";
+import { renderCash } from "./page/cash";
+import { renderCart } from "./page/cart";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
-import { renderMainPage } from "./page/main"
-import { renderDetailPage } from "./page/productDetail"; 
+import { renderMainPage } from "./page/main";
+import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
+
 import { renderLoginPage } from "./page/login";
 import { renderSignUp } from "./page/signup";
+import { renderOrderHisory, renderMyAccount } from "./page/mypage";
+
+import { renderSoldProduct } from "./page/mastersoldlist";
+import { renderAllProducts } from "./page/allproducts";
+import { renderSearchPage } from "./page/search";
 
 export const router = new Navigo("/");
 const app = document.querySelector("#app");
@@ -16,26 +24,39 @@ router.on("/", function () {
 
 router.on("/search/:query", function (params) {
   console.log(params.query);
+  renderSearchPage();
 });
 
 router.on("/product/detail/:productId", function (params) {
   renderDetailPage(params);
 });
 
+router.on("/product/all", function () {
+  renderAllProducts("all");
+});
+
+router.on("/product/best", function () {
+  renderAllProducts("best");
+});
+
+router.on("/product/new", function () {
+  renderAllProducts("new");
+});
+
 router.on("/product/cart", function () {
-  console.log("cart");
+  renderCart();
 });
 
 router.on("/product/checkout", function () {
-  console.log("checkout");
+  renderCash();
 });
 
-router.on("/mypage", function () {
-  app.innerHTML = `<h1>My Page</h1>`;
+router.on("/mypage/orderHistory", function (params) {
+  renderOrderHisory(params);
 });
 
-router.on("/mypage/bank", function () {
-  console.log("mypage/bank");
+router.on("/mypage/account", function (params) {
+  renderMyAccount(params);
 });
 
 router.on("/login", function () {
@@ -56,6 +77,10 @@ router.on("/master/product/detail/:id", function (match) {
 
 router.on("/master/product/add", function () {
   renderAddProduct();
+});
+
+router.on("/master/sold", function () {
+  renderSoldProduct();
 });
 
 router.resolve();
