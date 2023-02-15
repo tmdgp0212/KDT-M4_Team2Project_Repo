@@ -1,9 +1,13 @@
 import Navigo from "navigo";
+import { renderCash } from "./page/cash";
+import { renderCart } from "./page/cart";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main";
 import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
+import { renderOrderHisory, renderMyAccount } from "./page/mypage";
+
 import { renderSoldProduct } from "./page/mastersoldlist";
 import { renderAllProducts } from "./page/allproducts";
 import { renderSearchPage } from "./page/search";
@@ -37,19 +41,19 @@ router.on("/product/new", function () {
 });
 
 router.on("/product/cart", function () {
-  console.log("cart");
+  renderCart();
 });
 
 router.on("/product/checkout", function () {
-  console.log("checkout");
+  renderCash();
 });
 
-router.on("/mypage", function () {
-  app.innerHTML = `<h1>My Page</h1>`;
+router.on("/mypage/orderHistory", function (params) {
+  renderOrderHisory(params);
 });
 
-router.on("/mypage/bank", function () {
-  console.log("mypage/bank");
+router.on("/mypage/account", function (params) {
+  renderMyAccount(params);
 });
 
 router.on("/login", function () {

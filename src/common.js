@@ -1,5 +1,5 @@
 import { afterLoadUserAuth } from "./utilities/userAuth";
-import Navigo from "navigo";
+import { router } from "./route";
 
 const searchEl = document.querySelector('header form');
 const inputEl = document.querySelector('header input');
@@ -8,19 +8,17 @@ const cartCountEl =  document.querySelector('header .cart .cart-count');
 
 const userAuth = afterLoadUserAuth();
 
-// const router = new Navigo("/");
-
 searchEl.addEventListener('submit', evt => {
   evt.preventDefault();
   if(inputEl.value === "") return ;
-  // router.navigate(`/search/${inputEl.value}`);
+  router.navigate(`/search/${inputEl.value}`);
 });
 
 loginEl.addEventListener('click', () => {
   if(typeof userAuth === 'string') {
-    // return router.navigate('/login');
+    return router.navigate('/login');
   } else {
-    // return router.navigate('/mypage');
+    return router.navigate('/mypage');
   }
 })
 
