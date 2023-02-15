@@ -4,45 +4,75 @@ export async function renderSoldProduct() {
   const app = document.querySelector("#app");
   const $ = (selector) => app.querySelector(selector);
   const $$ = (selector) => app.querySelectorAll(selector);
-
+  let page = 1;
   app.innerHTML = "";
 
+  const loading = document.createElement("span");
+  loading.classList.add("loading");
+  loading.innerText = "loading...";
+  app.appendChild(loading);
+
   const soldProductPage = document.createElement("div");
+
   soldProductPage.classList.add("sold-product-page");
   const soldProductPageTitle = document.createElement("h1");
   soldProductPageTitle.innerText = "팔린 상품 목록";
   const soldProductDetail = document.createElement("div");
   soldProductDetail.classList.add("sold-product-detail");
 
+  const data = await getMasterAllSoldList();
+
   soldProductPage.append(
     soldProductPageTitle,
     soldProductDetail,
     renderSoldTitle(),
-    await renderSoldList()
+    await renderSoldList(data, page, true, soldProductPage, $, $$)
   );
   app.appendChild(soldProductPage);
 
-  const soldProduct = $$(".sold-product");
-  soldProduct.forEach((product) => {
-    product.addEventListener("click", async (e) => {
-      const detailId = e.target.closest(".sold-product").dataset.id;
-      await renderSoldDetail(detailId, $, $$);
+  $$(".page-nation-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      page = e.target.dataset.page;
+      $$(".page-nation-btn").forEach((btn) => {
+        btn.classList.remove("active");
+      });
+      e.target.classList.add("active");
+      soldProductPage.replaceChild(
+        await renderSoldList(data, page, false, soldProductPage, $, $$),
+        $$(".sold-list")[0]
+      );
     });
   });
 }
 
-async function renderSoldList() {
-  const data = await getMasterAllSoldList();
+async function renderSoldList(data, page, isFirst = true, parentNode, $, $$) {
+  data = data.sort((a, b) => {
+    return new Date(b.timePaid) - new Date(a.timePaid);
+  });
+  let dataArr = data.slice((page - 1) * 8, page * 8);
+
   const soldList = document.createElement("div");
   soldList.classList.add("sold-list");
 
-  data.forEach((product) => {
+  const pageNumber = Math.ceil(data.length / 8);
+
+  if (isFirst) {
+    parentNode.append(renderPageNationBtn(pageNumber));
+  } else soldList.innerHTML = "";
+
+  document.querySelector(".loading")?.remove();
+
+  dataArr.forEach((product) => {
     const soldProduct = document.createElement("div");
     soldProduct.classList.add("sold-product");
     soldProduct.dataset.id = product.detailId;
     const soldDate = product.timePaid.slice(0, 10);
 
-    console.log(product);
+    soldProduct.addEventListener("click", async (e) => {
+      console.log(e.target.closest(".sold-product").dataset.id);
+      const detailId = e.target.closest(".sold-product").dataset.id;
+      await renderSoldDetail(detailId, data, $, $$);
+    });
 
     const productSold = document.createElement("div");
     productSold.classList.add("sold-product-sold");
@@ -92,8 +122,23 @@ function renderSoldTitle() {
   return soldTitle;
 }
 
-async function renderSoldDetail(detailId, $, $$) {
-  let data = await getMasterAllSoldList();
+function renderPageNationBtn(totalPage) {
+  const pageNationBtn = document.createElement("div");
+  pageNationBtn.classList.add("page-nation");
+
+  for (let i = 1; i <= totalPage; i++) {
+    const pageNation = document.createElement("button");
+    pageNation.classList.add("page-nation-btn");
+    pageNation.innerText = String(i);
+    pageNation.dataset.page = String(i);
+    if (i === 1) pageNation.classList.add("active");
+    pageNationBtn.appendChild(pageNation);
+  }
+
+  return pageNationBtn;
+}
+
+async function renderSoldDetail(detailId, data, $, $$) {
   data = data.find((product) => {
     return product.detailId === detailId;
   });
