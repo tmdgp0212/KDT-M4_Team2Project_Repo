@@ -74,8 +74,9 @@ loginBtnEl.addEventListener("click", async () => {
   const data = { email, password }
 
   const res = await logIn(data)
-  userToken.token = res.accessToken
+  // userToken.token = res.accessToken
   console.log(res)
+  localStorage.setItem('userToken',res.accessToken)
 });
 
 // 이메일 유효성 검사 함수
