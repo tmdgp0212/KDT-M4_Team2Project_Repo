@@ -7,7 +7,7 @@ import {
   getBankAccount,
   getCurrentAccount,
 } from "../utilities/userapi";
-import { getBuyList } from "../utilities/productapi";
+import { getBuyList, getBuyDetail, getProductDetail } from "../utilities/productapi";
 
 export async function renderOrderHisory() {
   const app = document.querySelector("#app");
@@ -27,18 +27,21 @@ export async function renderOrderHisory() {
     sectionEl.className = "myPage";
     const articleEl = document.createElement("article");
 
-    await renderSideMenu(sectionEl, articleEl);
+    const profile = await userAuth(userToken._token);
+    const buyList = await getBuyList(userToken._token);
+    const accountList = await getCurrentAccount(userToken._token);
+
+    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
 
     const titleEl = document.createElement("h1");
     titleEl.textContent = "나의 주문";
 
-    const buyList = await getBuyList(userToken._token);
+    const contentEl = document.createElement("div");
+    contentEl.className = "buyList";
+
     const buyListSort = buyList.sort(
       (a, b) => new Date(b.timePaid) - new Date(a.timePaid)
     );
-
-    const contentEl = document.createElement("ul");
-    contentEl.className = "buyListUl";
 
     await renderBuyList(contentEl, buyListSort);
 
@@ -52,14 +55,13 @@ export async function renderOrderHisory() {
 }
 async function renderBuyList(contentEl, buyList) {
   const buyItemEl = buyList.map((item) => {
-    const buyItemLiEl = document.createElement("li");
+    const buyItemLiEl = document.createElement("a");
     buyItemLiEl.className = "buyItemLi";
 
     const stateEl = document.createElement("div");
     stateEl.className = "buyItemLi__state";
     if (item.isCanceled === false && item.done === false) {
       stateEl.textContent = "결제완료";
-      stateEl.addEventListener("click", () => console.log("잘 동작"));
       stateEl.style.color = "#000";
     } else if (item.isCanceled === true) {
       stateEl.textContent = "반품환불완료";
@@ -98,12 +100,12 @@ async function renderBuyList(contentEl, buyList) {
       const btnsEl = document.createElement("div");
       btnsEl.className = "buyItemLi__summary__btns";
 
-      const isCanceledBtnEl = document.createElement("button");
-      isCanceledBtnEl.textContent = "주문취소";
-      isCanceledBtnEl.classList.add("common-btn");
-      const doneBtnEl = document.createElement("button");
-      doneBtnEl.textContent = "구매확정";
-      doneBtnEl.classList.add("common-btn");
+      const isCanceledBtnEl = document.createElement('button');
+      isCanceledBtnEl.textContent = '주문취소';
+      isCanceledBtnEl.classList.add('red-btn');
+      const doneBtnEl = document.createElement('button');
+      doneBtnEl.textContent = '구매확정';
+      doneBtnEl.classList.add('darken-btn');
 
       btnsEl.append(isCanceledBtnEl, doneBtnEl);
 
@@ -118,11 +120,130 @@ async function renderBuyList(contentEl, buyList) {
 
     buyItemLiEl.append(stateEl, thumbnailEl, summaryEl);
 
+    buyItemLiEl.setAttribute('id', `${item.detailId}`);
+    buyItemLiEl.addEventListener('click', () => {
+      router.navigate(`/mypage/order/detail/${buyItemLiEl.id}`);
+    })
+
     return buyItemLiEl;
   });
-  console.log(buyItemEl);
-
   contentEl.append(...buyItemEl);
+}
+
+export async function renderOrderDetail(detailId) {
+  const app = document.querySelector("#app");
+  app.innerHTML = "";
+  app.append(handlingLoading(true));
+
+  const loginState = await afterLoadUserAuth(); // 토큰 유무/유효 검증
+  if (!loginState) {
+    const loading = document.querySelector(".skeleton");
+    loading.remove();
+
+    const loginMessageEl = document.createElement("div");
+    loginMessageEl.className = "loginMessage";
+    loginMessageEl.innerText = "로그인이 필요합니다!";
+
+    app.append(loginMessageEl);
+  } else {
+    const sectionEl = document.createElement("section");
+    sectionEl.className = "myPage";
+    const articleEl = document.createElement("article");
+    
+    const profile = await userAuth(userToken._token);
+    const buyList = await getBuyList(userToken._token);
+    const accountList = await getCurrentAccount(userToken._token);
+
+    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
+
+    const orderDetail = await getBuyDetail(userToken._token, detailId);
+    const localTime = new Date(orderDetail.timePaid);
+    console.log(orderDetail);
+
+    articleEl.innerHTML = /*html*/`
+    <h1>주문 상세</h1>
+    <div class="productInfo info">
+      <div class="header">상품 정보</div>
+      <div class="productInfo__img backgroundimg">
+        <img src="${orderDetail.product.thumbnail}" alt="profileImg" class="productInfo__img img">
+      </div>
+      <div class="productInfo__state"></div>
+      <div class="productInfo__title">${orderDetail.product.title}</div>
+      <div class="productInfo__price">${orderDetail.product.price.toLocaleString()}원</div>
+      <div class="productInfo__button"></div>   
+    </div>
+    <div class="ordererInfo info">
+      <div class="header">주문자 정보</div>
+      <div class="ordererInfo__name"><span>이름</span>${profile.displayName}</div>
+      <div class="ordererInfo__email"><span>메일</span>${profile.email}</div>
+    </div>
+    <div class="paymentInfo info">
+      <div class="header">결제 정보</div>
+      <div class="paymentInfo__way">계좌 간편결제</div>
+      <div class="paymentInfo__bankName">${orderDetail.account.bankName}</div>
+      <div class="paymentInfo__accountNumber">${orderDetail.account.accountNumber}</div>
+      <div class="paymentInfo__price">${orderDetail.product.price.toLocaleString()}원</div>
+      <div class="paymentInfo__timePaid">${localTime.toLocaleString('ko-kr')}</div>
+    </div>
+    `
+    app.append(sectionEl);
+
+    const stateEl = document.querySelector('.productInfo__state');
+    if (orderDetail.isCanceled === false && orderDetail.done === false) {
+      stateEl.textContent = "[결제완료]";
+      stateEl.style.color = "#000";
+    } else if (orderDetail.isCanceled === true) {
+      stateEl.textContent = "[반품환불완료]";
+    } else if (orderDetail.done === true) {
+      stateEl.textContent = "[구매확정완료]";
+    }
+
+    const thumbnailEl = document.querySelector('.img');
+
+    if (!orderDetail.product.thumbnail) {
+      thumbnailEl.remove()
+    }
+
+    const productInfoBtns = document.querySelector('.productInfo__button');
+
+    if (orderDetail.isCanceled === false && orderDetail.done === false) {
+      const btnsEl = document.createElement("div");
+      btnsEl.className = "productInfo__button__btns";
+
+      const isCanceledBtnEl = document.createElement('button');
+      isCanceledBtnEl.textContent = '주문취소';
+      isCanceledBtnEl.classList.add('red-btn');
+      const doneBtnEl = document.createElement('button');
+      doneBtnEl.textContent = '구매확정';
+      doneBtnEl.classList.add('darken-btn');
+
+      btnsEl.append(isCanceledBtnEl, doneBtnEl);
+
+      productInfoBtns.append(btnsEl);
+    } else {
+      const repurchaseBtnEl = document.createElement("button");
+      repurchaseBtnEl.textContent = "재구매";
+      repurchaseBtnEl.classList.add("common-btn");
+
+      productInfoBtns.append(repurchaseBtnEl);
+    }
+    
+    const isCurrentTrue = await getProductDetail(orderDetail.product.productId);
+
+    const productInfoEl = document.querySelector('.productInfo');
+    productInfoEl.setAttribute('id', `${orderDetail.product.productId}`);
+    productInfoEl.addEventListener('click', () => {
+      if (isCurrentTrue === "유효한 제품 정보가 아닙니다."){
+        window.alert('현재 판매하는 제품이 아닙니다.');
+      }
+      else{
+        router.navigate(`/product/detail/${productInfoEl.id}`);
+      }
+    });
+
+    const loading = document.querySelector(".skeleton");
+    loading.remove();
+  }
 }
 
 export async function renderMyAccount() {
@@ -146,21 +267,22 @@ export async function renderMyAccount() {
     sectionEl.className = "myPage";
     const articleEl = document.createElement("article");
 
-    await renderSideMenu(sectionEl, articleEl);
+    const profile = await userAuth(userToken._token);
+    const buyList = await getBuyList(userToken._token);
+    const accountList = await getCurrentAccount(userToken._token);
+
+    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
 
     const titleEl = document.createElement("h1");
     titleEl.textContent = "나의 계좌";
 
-    const accountList = await getCurrentAccount(userToken._token);
-
-    const contentEl = document.createElement("ul");
-    contentEl.className = "accountListUl";
+    const contentEl = document.createElement("div");
+    contentEl.className = "accountList";
 
     await renderAccountList(contentEl, accountList);
 
-    const addAccountBtnEl = document.createElement("li");
+    const addAccountBtnEl = document.createElement("a");
     addAccountBtnEl.className = "addAccountBtn";
-    //addAccountBtnEl.classList.add('accountLi');
     addAccountBtnEl.innerHTML =
       '<span class="material-symbols-outlined">add_circle</span> 추가하기';
 
@@ -242,7 +364,7 @@ async function renderAccountList(contentEl, accountList) {
   contentEl.append(...accountEl);
 }
 
-async function renderSideMenu(sectionEl, articleEl) {
+async function renderSideMenu(sectionEl, articleEl, profile, buyList, accountList) {
   // 화면 왼쪽 사이드 메뉴 생성(프로필, 주문•배송, 잔액, 주문, 계좌, 정보)
   const leftSideMenuEl = document.createElement("nav");
   leftSideMenuEl.className = "leftSideMenu";
@@ -250,10 +372,6 @@ async function renderSideMenu(sectionEl, articleEl) {
   // 프로필 표시
   const profileEl = document.createElement("div");
   profileEl.className = "profile";
-
-  // 토큰을 변수에 저장, 사용자 정보 가져오기
-  const token = userToken._token;
-  const profile = await userAuth(token);
 
   // 프로필 표시할 항목(이미지, 표시이름, 이메일)
   const profileUlEl = document.createElement("ul");
@@ -301,17 +419,17 @@ async function renderSideMenu(sectionEl, articleEl) {
     '<span class="material-symbols-outlined">local_shipping</span> 주문•배송';
 
   // 주문•배송 현황 값 가져오기
-  const buyList = await getBuyList(token);
   const orderDeliveryValue = buyList.filter(
     (e) => e.done === false && e.isCanceled === false // 아직 구매취소x, 구매확정x
   ).length;
 
-  console.log(buyList);
-
   // 주문•배송 현황 값 표시
-  const orderDeliveryValueEl = document.createElement("div");
+  const orderDeliveryValueEl = document.createElement('a');
   orderDeliveryValueEl.className = "myPageSummary__btns__value";
-  orderDeliveryValueEl.innerText = `${orderDeliveryValue} 건`;
+  orderDeliveryValueEl.innerText = `${orderDeliveryValue} 건`
+  orderDeliveryValueEl.addEventListener('click', () => {
+    router.navigate('/mypage/order');
+  })
 
   orderDeliveryEl.append(orderDeliveryNameEl, orderDeliveryValueEl);
 
@@ -326,40 +444,43 @@ async function renderSideMenu(sectionEl, articleEl) {
     '<span class="material-symbols-outlined">local_atm</span> 나의 잔액';
 
   // 나의 잔액 값 가져오기
-  const currentAccount = await getCurrentAccount(token);
-  const balanceValue = currentAccount.totalBalance.toLocaleString();
-
-  console.log(currentAccount);
+  const balanceValue = accountList.totalBalance.toLocaleString();
 
   // 나의 잔액 값 표시
-  const balanceValueEl = document.createElement("div");
+  const balanceValueEl = document.createElement('a');
   balanceValueEl.className = "myPageSummary__btns__value";
   balanceValueEl.innerText = `${balanceValue} 원`;
+  balanceValueEl.addEventListener('click', () => {
+    router.navigate('/mypage/account');
+  })
 
   balanceEl.append(balanceNameEl, balanceValueEl);
 
   myPageSummaryEl.append(orderDeliveryEl, balanceEl);
 
   // 나의 주문
-  const myOrderBtnEl = document.createElement("a");
-  myOrderBtnEl.innerHTML =
-    '<span class="material-symbols-outlined">shop_two</span> 나의 주문';
-  myOrderBtnEl.addEventListener("click", () => {
-    router.navigate("/mypage/orderHistory");
+  const myOrderBtnEl = document.createElement('a');
+  myOrderBtnEl.className = 'myPageBtns__link';
+  myOrderBtnEl.innerHTML = 
+  '<span class="material-symbols-outlined">shop_two</span> 나의 주문';
+  myOrderBtnEl.addEventListener('click', () => {
+    router.navigate('/mypage/order');
   });
 
   // 나의 계좌
-  const myAccountBtnEl = document.createElement("a");
-  myAccountBtnEl.innerHTML =
-    '<span class="material-symbols-outlined">payments</span> 나의 계좌';
-  myAccountBtnEl.addEventListener("click", () => {
-    router.navigate("/mypage/account");
+  const myAccountBtnEl = document.createElement('a');
+  myAccountBtnEl.className = 'myPageBtns__link';
+  myAccountBtnEl.innerHTML = 
+  '<span class="material-symbols-outlined">payments</span> 나의 계좌';
+  myAccountBtnEl.addEventListener('click', () => {
+    router.navigate('/mypage/account');
   });
 
   // 나의 정보
-  const myInfoBtnEl = document.createElement("a");
-  myInfoBtnEl.innerHTML =
-    '<span class="material-symbols-outlined">person</span> 나의 정보';
+  const myInfoBtnEl = document.createElement('a');
+  myInfoBtnEl.className = 'myPageBtns__link';
+  myInfoBtnEl.innerHTML = 
+  '<span class="material-symbols-outlined">person</span> 나의 정보';
 
   myPageBtnsEl.append(
     myPageSummaryEl,
