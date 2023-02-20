@@ -9,6 +9,7 @@ $primary-color: #8083a3;
 $light-gray: #e4e6e8;
 $blue-white: #f5f5fa;
 $soft-red: #ed544e;
+$soft-green: #2ecc71;
 
 //폰트크기
 @mixin title-font {
@@ -115,7 +116,7 @@ button {
     border-bottom: 1px solid $light-gray;
     z-index: 10;
 
-    .container {
+    .container.header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -202,12 +203,8 @@ button {
         .login {
           display: flex;
           align-items: center;
-<<<<<<< HEAD
           position: relative;
           
-=======
-
->>>>>>> 9361cc2c0962d6d863b4fb75228588e8c192e8c0
           .login--text {
             display: flex;
             align-items: center;
@@ -232,9 +229,8 @@ button {
               background-size: cover;
             }
           }
-<<<<<<< HEAD
 
-          .login--context {
+          .login--dropdown {
             position: absolute;
             top: 32px;
             left: 0px;
@@ -265,12 +261,6 @@ button {
     }//.container
   }//header
 
-=======
-        }
-      }
-    } //.container
-  } //header
->>>>>>> 9361cc2c0962d6d863b4fb75228588e8c192e8c0
 
   footer {
     padding: 40px;
