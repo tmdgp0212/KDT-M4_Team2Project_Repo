@@ -8,7 +8,11 @@ import { logIn } from "../utilities/userapi"
 export function renderLoginPage() {
   const app = document.querySelector("#app")
   app.innerHTML = /* html */ `
+<<<<<<< HEAD
   <div class="container login">
+=======
+  <div class="login-container">
+>>>>>>> feature/CSS
     <div class="left">    
     </div>
       <div class="right">

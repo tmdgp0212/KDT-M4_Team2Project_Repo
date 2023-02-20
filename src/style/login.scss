@@ -7,6 +7,42 @@
 }
 
 #app {
+<<<<<<< HEAD
+=======
+  
+.login-container {
+	padding: 50px;
+	display: grid;
+	grid-template-columns: 80% 0;
+  .left {
+    img {
+    background-image: url("../images/main_visual1.jpg");
+		background-size: cover;
+		border-radius: 5px;
+    width: 80%;
+    height: 500px;
+  }
+  }
+.right {
+	display: grid;
+	grid-template-rows: 0.5fr auto;
+	align-items: center;
+	justify-content: center;
+	// margin: 50px 0 0 0;
+	h3 {
+		text-align: center;
+	}
+	h5 {
+		color: #E4E6E8;
+		text-align: center;
+		font-size: 10px;
+		margin-bottom: 40px;
+	}
+	a {
+		text-decoration: none;
+		color: #E4E6E8;
+	}
+>>>>>>> feature/CSS
 
 	.container {
 		.container.login {
