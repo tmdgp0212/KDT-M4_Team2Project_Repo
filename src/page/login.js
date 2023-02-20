@@ -8,12 +8,9 @@ import { logIn } from "../utilities/userapi"
 export function renderLoginPage() {
   const app = document.querySelector("#app")
   app.innerHTML = /* html */ `
-<<<<<<< HEAD
-  <div class="container login">
-=======
   <div class="login-container">
->>>>>>> feature/CSS
-    <div class="left">    
+    <div class="left">
+      <div class="img-text">WELCOME TO NEXT_FURNITURE</div>
     </div>
       <div class="right">
       <h3>Sign In to your account</h3>
