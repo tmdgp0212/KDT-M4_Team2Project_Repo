@@ -1,7 +1,7 @@
 
 
 ### VisualStudioCode ###
-.vscode/*
+.vscode/**/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -158,6 +158,7 @@ dist
 *.css.map
 *.sass.map
 *.scss.map
+*.css
 
 # webstorm
 .idea

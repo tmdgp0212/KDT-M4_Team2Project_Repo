@@ -4,7 +4,7 @@ import { signIn } from "../utilities/userapi"
 export function renderSignUp(){
   const app = document.querySelector("#app")
   app.innerHTML= /* html */`
-  <div class="container">
+  <div class="signup-container">
     <div class="left">    
     </div>
       <div class="right">
@@ -76,15 +76,10 @@ export function renderSignUp(){
           <span>E</span>
         </label>   
       </div>
-        <button class="btn" id="signUpBtn" type="button">Continue</button>
+        <button class="btn" id="signUpBtn" type="button" onclick="checkingIdPw()">Continue</button>
       </form>
     </div>
   `
-
-// ADD IMAGE
-const leftEl = document.querySelector('.left')
-const imgEl = document.createElement('img')
-leftEl.append(imgEl)
 
 // INPUT ANIMATION
 const labels = document.querySelectorAll('.form-control label')
@@ -94,6 +89,7 @@ labels.forEach(label => {
         .map((letter, index)=> `<span style="transition-delay:${index * 50}ms"> ${letter} </span>`)
         .join('')
 })
+
 // SIGNUP API
 const emailEl = document.querySelector("#email")
 const passwordEl = document.querySelector("#password")
@@ -102,7 +98,6 @@ const signUpBtnEl = document.querySelector("#signUpBtn")
 const pwEl =document.querySelector("#password")
 const confirmPwEl = document.querySelector("#confirm-pw")
 const pwValid = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[~,!,@,#,$,*,(,),=,+,_,.,|]).*$/
-
 
 signUpBtnEl.addEventListener('click', async () => {
 
@@ -116,5 +111,51 @@ userToken.token = res.accessToken
 console.log(res)
 })
 
+// CHECKING ID, PASSWORD
+checkingIdPw = function () {
 
+  if (!emailEl.value) {             
+		alert("이메일을 입력하세요!")
+		emailEl.focus()
+		return
+	}              
+	else   {          
+		if(!CheckEmail(emailEl.value))	{
+			alert("이메일 형식이 잘못되었습니다")
+			emailEl.focus()
+			return;
+		}                
+	}    
+  
+  if(pwEl.length < 6) {
+          alert('입력한 글자가 6글자 이상이어야 합니다.');
+          return false;
+      }
+      
+      if( pwEl != confirmPwEl ) {
+        alert("비밀번호불일치");
+        return false;
+      } else{
+        alert("비밀번호가 일치합니다");
+        return true;
+      }
+}
+
+// 이메일 유효성 검사 함수
+checkTheEmail = function ()                
+  {                                           
+	const emailEl = document.querySelector("#email")
+                  
+}    
+
+// CHECK EMAIL FORM
+function CheckEmail(str){ 
+  const reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/
+  if(!reg_email.test(str)) {                            
+    return false         
+  }                            
+  else {                       
+    return true         
+  }                            
+} 
 }

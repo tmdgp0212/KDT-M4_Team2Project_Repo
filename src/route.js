@@ -10,7 +10,7 @@ import { renderMasterProductDetailPage } from "./page/masterproductdetail";
 
 import { renderLoginPage } from "./page/login";
 import { renderSignUp } from "./page/signup";
-import { renderOrderHisory, renderMyAccount, renderOrderDetail, renderAccountAdd } from "./page/mypage";
+import { renderOrderHisory, renderMyAccount, renderOrderDetail, renderAccountAdd, renderMyProfile } from "./page/mypage";
 
 import { renderSoldProduct } from "./page/mastersoldlist";
 import { renderAllProducts } from "./page/allproducts";
@@ -58,6 +58,11 @@ router.on("/product/checkout", function () {
   CommonFn();
   renderCash();
 });
+
+router.on("/mypage", function() {
+  CommonFn();
+  renderMyProfile();
+})
 
 router.on("/mypage/order", function (params) {
   CommonFn();

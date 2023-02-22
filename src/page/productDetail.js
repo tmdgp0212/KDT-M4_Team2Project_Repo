@@ -75,7 +75,7 @@ export async function renderDetailPage(params) {
       </div>
     </div>
 
-    <div class="modal-bg">
+    <div class="modal-bg add-cart-modal">
       <div class="modal">
         <div class="icon">
           <span class="material-symbols-outlined cart-icon">
@@ -130,7 +130,8 @@ export async function renderDetailPage(params) {
     if (typeof userAuth === "string") {
       return router.navigate("/login");
     }
-    ProductCartIn(params.data.productId);
+    const { id, price, thumbnail, title } = product;
+    ProductCartIn(id, price, thumbnail, title);
   });
 
   modalCartBtnEl.addEventListener("click", () => {
@@ -149,7 +150,18 @@ export async function renderDetailPage(params) {
     }
   });
 
+  
   (function renderTags() {
+    
+    if(product.tags.length <= 1) {
+      const noTagEl = document.createElement('span');
+      noTagEl.classList.add('no-tag');
+      noTagEl.textContent = '포함된 태그가 없습니다'
+      tagsEl.append(noTagEl);
+      
+      return;
+    }
+
     product.tags.forEach((tag, idx) => {
       if (idx === 0) return;
       const spanEl = document.createElement("span");
@@ -218,15 +230,15 @@ export async function renderDetailPage(params) {
     loadingEl.remove();
   }
 
-  function ProductCartIn(id) {
+  function ProductCartIn(id, price, thumbnail, title) {
     const savedCart = getItems("cart");
     console.log(savedCart);
-    if (savedCart.includes(id)) {
+    if (savedCart.find((item) => item.id === id)) {
       showModal(true);
       return;
     }
 
-    savedCart.push(id);
+    savedCart.push({ id, price, thumbnail, title, num: 1 });
     setItems("cart", savedCart);
 
     const cartCountEl = document.querySelector(".cart-count");
