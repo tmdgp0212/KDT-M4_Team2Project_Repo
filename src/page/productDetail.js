@@ -75,7 +75,7 @@ export async function renderDetailPage(params) {
       </div>
     </div>
 
-    <div class="modal-bg">
+    <div class="modal-bg add-cart-modal">
       <div class="modal">
         <div class="icon">
           <span class="material-symbols-outlined cart-icon">
@@ -149,7 +149,18 @@ export async function renderDetailPage(params) {
     }
   });
 
+  
   (function renderTags() {
+    
+    if(product.tags.length <= 1) {
+      const noTagEl = document.createElement('span');
+      noTagEl.classList.add('no-tag');
+      noTagEl.textContent = '포함된 태그가 없습니다'
+      tagsEl.append(noTagEl);
+      
+      return;
+    }
+
     product.tags.forEach((tag, idx) => {
       if (idx === 0) return;
       const spanEl = document.createElement("span");

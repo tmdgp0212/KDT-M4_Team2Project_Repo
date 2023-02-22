@@ -69,6 +69,7 @@ loginBtnEl.addEventListener("click", async () => {
   const email = emailEl.value
   const password = pwEl.value
   const data = { email, password }
+
   const res = await logIn(data)  
   
   if(res.accessToken) {

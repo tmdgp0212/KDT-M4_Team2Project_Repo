@@ -12,14 +12,13 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"
     />
-    <script defer type="module" src="./src/main.js"></script>
-    <!-- <script defer type="module" src="./src/common.js"></script> -->
+    <!-- <script defer type="module" src="./src/main.js"></script> -->
     <script defer type="module" src="./src/route.js"></script>
   </head>
   <body>
     <div id="wrap">
       <header>
-        <div class="container">
+        <div class="container header">
           <h1>
             <a href="/">
               <img src="./src/images/NFlogo.svg" alt="Next Furniture" />
@@ -46,11 +45,17 @@
               <span class="cart-count">0</span>
             </a>
 
-            <a class="login" data-navigo>
+            <a class="login" href="/login" data-navigo>
               <span class="profile material-symbols-outlined icon">
                 account_circle
               </span>
               <span class="login--text">Login</span>
+              <ul class="login--dropdown hidden">
+                <li data-href="/mypage">내 프로필</li>
+                <li data-href="/mypage/order">주문/결제</li>
+                <li data-href="/mypage/account">자산목록</li>
+                <li class="logout" data-href="/">로그아웃</li>
+              </ul>
             </a>
           </div>
         </div>
@@ -76,25 +81,7 @@
         "
       >
         <h2>테스트버튼</h2>
-        <button class="login">login</button>
-        <button class="logout">logout</button>
-        <button class="get-bank">get-bank</button>
-        <button class="get-bank-account">get-bank-account</button>
-        <button class="add-bank">add-bank</button>
-        <button class="del-bank">del-bank</button>
-        <button class="master-get-list">master-get-list</button>
-        <button class="master-get-sold-list">master-get-sold-list</button>
-        <button class="master-post-product">master-post-product</button>
-        <button class="master-edit-product">master-edit-product</button>
-        <button class="master-delete-product">master-delete-product</button>
-        <button class="get-product-details">get-product-details</button>
-        <button class="search-product">search-product</button>
-        <button class="buy-product">buy-product</button>
-        <button class="get-buy-list">get-buy-list</button>
-        <button class="get-buy-detail">get-buy-detail</button>
-        <button class="cancel-buy">cancel-buy</button>
-        <button class="confirm-buy">confirm-buy</button>
-        <a href="/mypage/orderHistory" data-navigo>my page</a>
+        <a href="/mypage/order" data-navigo>my page</a>
         <a href="/master" data-navigo>master</a>
       </div>
     </div>

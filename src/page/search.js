@@ -4,12 +4,14 @@ import { searchProduct } from "../utilities/productapi";
 import { router } from "../route";
 
 export async function renderSearchPage(params) {
+  window.scrollTo({top: 0, behavior: "smooth"});
+  
   const app = document.querySelector('#app');
   const searchText = params.data.query;
 
   app.innerHTML = /* html */`
     <div class="container search-page">
-      <h2><span>'${searchText}' <span>로 검색한 결과입니다</h2>
+      <h2><span>'${searchText}' <span>(으)로 검색한 결과입니다</h2>
       
       <div class="search--result">
         <div class="sort--toggle">
