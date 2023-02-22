@@ -25,8 +25,13 @@ export async function CommonFn() {
     router.navigate(event.target.dataset.href);
   });
 
-  loginEl.addEventListener('click', (e) => {
+  loginEl.addEventListener('click', async () => {
     if(userAuth === null) {
+      // const data = {
+      //   email : "test@test.com",
+      //   password : "12341234",
+      //   displayName : "user",
+      // }
       router.navigate('/login');
       return;
     }
@@ -39,12 +44,13 @@ export async function CommonFn() {
     console.log(res)
 
     if(res) {
+      localStorage.removeItem('userToken');
       loginIconEl.classList.remove('profile');
       loginTextEl.textContent = "Login";
       loginIconEl.style.backgroundImage = "";
 
-      window.location.reload()
       userAuth = await afterLoadUserAuth();
+      window.location.reload()
     }
   });
 
