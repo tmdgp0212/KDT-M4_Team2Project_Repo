@@ -66,6 +66,7 @@ const emailEl  = document.querySelector('#email')
 const pwEl = document.querySelector('#password')
 const loginBtnEl = document.querySelector("#loginBtn")
 loginBtnEl.addEventListener("click", async () => {
+
   const email = emailEl.value
   const password = pwEl.value
   const data = { email, password }
