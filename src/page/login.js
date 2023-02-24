@@ -72,14 +72,14 @@ loginBtnEl.addEventListener("click", async () => {
   const data = { email, password }
 
   const res = await logIn(data)  
-  
+
   if(res.accessToken) {
     userToken.token = res.accessToken
-    router.navigate('/')
-    return
+    return router.navigate('/')
+    
   } else if (!res.accessToken) {
     const message = "이메일과 비밀번호를 확인해주세요"
-    window.alert(message)
+    return window.alert(message)
   } else {
     checkTheEmail()
   }
@@ -109,4 +109,6 @@ function CheckEmail(str){
     return true         
   }                            
 }
+
 }
+export {checkTheEmail, CheckEmail}
