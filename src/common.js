@@ -27,11 +27,6 @@ export async function CommonFn() {
 
   loginEl.addEventListener('click', async () => {
     if(userAuth === null) {
-      // const data = {
-      //   email : "test@test.com",
-      //   password : "12341234",
-      //   displayName : "user",
-      // }
       router.navigate('/login');
       return;
     }
