@@ -396,11 +396,11 @@ async function renderAccountListOptionAdd(bankSelectEl, bankAccount, profile){
   ];
 
   const bankListArr = logoList.map( ([bankName, bankImg]) => {
-    const bankSelectOptionEl = document.createElement('div');
+    const bankSelectOptionEl = document.createElement('label');
     bankSelectOptionEl.className = `bankSelectOption`;
     bankSelectOptionEl.innerHTML = /*html*/`
       <input type="radio" id="${bankName}" name="bankList" value="${bankName}">
-      <label for="${bankName}">${bankImg}${bankName}</label>
+      <span>${bankImg}${bankName}</span>
     `;
 
     let currentCheckedBank;
