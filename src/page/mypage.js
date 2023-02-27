@@ -321,7 +321,9 @@ export async function renderMyAccount() {
     app.append(sectionEl);
 
     const loading = document.querySelector(".skeleton");
-    loading.remove();
+    if(loading) {
+      loading.remove();
+    }
   }
 }
 
