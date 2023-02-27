@@ -1,5 +1,5 @@
 import Navigo from "navigo";
-import { CommonFn } from "./common";
+import { CommonFn } from "./page/common";
 import { renderCash } from "./page/cash";
 import { renderCart } from "./page/cart";
 import { renderMasterPage } from "./page/master";
@@ -17,7 +17,6 @@ import { renderAllProducts } from "./page/allproducts";
 import { renderSearchPage } from "./page/search";
 
 export const router = new Navigo("/");
-const app = document.querySelector("#app");
 
 router.hooks({
   before: (done) => {
