@@ -1,4 +1,5 @@
-import "../style/mypage.scss";
+import "../style/mypageCommon.scss";
+import "../style/mypageProfile.scss";
 import "../style/loadingmypage.scss";
 import { router } from "../route";
 import { userToken, afterLoadUserAuth } from "../utilities/userAuth";
