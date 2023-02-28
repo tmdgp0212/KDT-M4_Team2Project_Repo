@@ -104,6 +104,7 @@ export async function renderOrderDetail(detailId) {
 
       productInfoBtns.append(btnsEl);
 
+      // 주문취소, 구매확정 버튼 이벤트 함수
       cancelDoneBtns(isCanceledBtnEl, doneBtnEl, orderDetail.detailId);
     } else {
       const repurchaseBtnEl = document.createElement("button");
@@ -128,6 +129,8 @@ export async function renderOrderDetail(detailId) {
       }
     });
 
+    // (제품정보 페이지 이동) 이벤트 capturing 막기 위함
+    // -> 버튼은 다른 동작필요
     productInfoBtns.addEventListener('click', (event) => {
       event.stopPropagation();
     })
