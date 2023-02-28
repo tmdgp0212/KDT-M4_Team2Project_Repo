@@ -23,6 +23,15 @@ export async function cancelDoneBtns(isCanceledBtnEl, doneBtnEl, detailId) {
   })
 }
 
+// === 재구매 버튼 이벤트 함수 ===
+export async function repurchaseBtn(repurchaseBtnEl) {
+  repurchaseBtnEl.addEventListener('click', () => {
+    console.log('재구매 성공!');
+    router.navigate('/product/cart');
+  })
+}
+
+// 마이페이지 사이드 메뉴 렌더링 함수
 export async function renderSideMenu(sectionEl, articleEl) {
 
   const profile = await userAuth(userToken._token);

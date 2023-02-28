@@ -11,7 +11,7 @@ import {
   addBankAccount
 } from "../utilities/userapi";
 import { getBuyList, getBuyDetail, getProductDetail, cancelBuy, confirmBuy } from "../utilities/productapi";
-import { renderSideMenu, cancelDoneBtns, handlingLoading } from "../page/mypageCommon";
+import { renderSideMenu, cancelDoneBtns, repurchaseBtn, handlingLoading } from "../page/mypageCommon";
 
 export async function renderOrderHisory() {
   const app = document.querySelector("#app");
@@ -99,6 +99,8 @@ async function renderBuyList(contentEl, buyList) {
 
     summaryEl.append(timePaidEl, titleEl, priceEl);
 
+    const repurchaseBtnEl = document.createElement("button");
+
     if (item.isCanceled === false && item.done === false) {
       const btnsEl = document.createElement("div");
       btnsEl.className = "buyItemLi__summary__btns";
@@ -120,12 +122,14 @@ async function renderBuyList(contentEl, buyList) {
       cancelDoneBtns(isCanceledBtnEl, doneBtnEl, item.detailId);
 
     } else {
-      const repurchaseBtnEl = document.createElement("button");
       repurchaseBtnEl.setAttribute('type', 'button');
       repurchaseBtnEl.textContent = "재구매";
       repurchaseBtnEl.classList.add("common-btn");
 
       summaryEl.append(repurchaseBtnEl);
+
+      // === 재구매 버튼 이벤트 함수 ===
+      repurchaseBtn(repurchaseBtnEl);
     }
 
     buyItemLiEl.append(stateEl, thumbnailEl, summaryEl);
@@ -133,6 +137,10 @@ async function renderBuyList(contentEl, buyList) {
     buyItemLiEl.setAttribute('id', `${item.detailId}`);
     buyItemLiEl.addEventListener('click', () => {
       router.navigate(`/mypage/order/detail/${buyItemLiEl.id}`);
+    })
+
+    repurchaseBtnEl.addEventListener('click', (event) => {
+      event.stopPropagation();
     })
 
     return buyItemLiEl;

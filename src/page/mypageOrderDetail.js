@@ -11,7 +11,7 @@ import {
   addBankAccount
 } from "../utilities/userapi";
 import { getBuyList, getBuyDetail, getProductDetail, cancelBuy, confirmBuy } from "../utilities/productapi";
-import { renderSideMenu, cancelDoneBtns, handlingLoading } from "../page/mypageCommon";
+import { renderSideMenu, cancelDoneBtns, repurchaseBtn, handlingLoading } from "../page/mypageCommon";
 
 export async function renderOrderDetail(detailId) {
   const app = document.querySelector("#app");
@@ -113,6 +113,9 @@ export async function renderOrderDetail(detailId) {
       repurchaseBtnEl.classList.add("common-btn");
 
       productInfoBtns.append(repurchaseBtnEl);
+
+      // === 재구매 버튼 이벤트 함수 ===
+      repurchaseBtn(repurchaseBtnEl);
     }
     
     // 해당 제품이 현재 판매중인지 확인
