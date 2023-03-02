@@ -1,9 +1,9 @@
 import { afterLoadUserAuth, userToken } from "../utilities/userAuth";
 import { userLogOut } from "../utilities/userapi";
 import { router } from "../route";
-
+import { getItems } from "../utilities/local";
 export async function CommonFn() {
-  const header = document.querySelector('header');
+  const header = document.querySelector("header");
   header.innerHTML = /* html */ `
   <div class="header--container">
     <h1>
@@ -60,13 +60,13 @@ export async function CommonFn() {
   let userAuth = await afterLoadUserAuth();
   checkLogin(userAuth)
 
-  searchEl.addEventListener('submit', evt => {
+  searchEl.addEventListener("submit", (evt) => {
     evt.preventDefault();
-    if(inputEl.value === "") return ;
+    if (inputEl.value === "") return;
     router.navigate(`/search/${inputEl.value}`);
   });
-  
-  dropdownEl.addEventListener('click', event => {
+
+  dropdownEl.addEventListener("click", (event) => {
     router.navigate(event.target.dataset.href);
   });
 
@@ -75,11 +75,11 @@ export async function CommonFn() {
       router.navigate('/login');
       return;
     }
-    
-    dropdownEl.classList.toggle('hidden');
+
+    dropdownEl.classList.toggle("hidden");
   });
 
-  logoutEl.addEventListener('click', async () => {
+  logoutEl.addEventListener("click", async () => {
     const res = await userLogOut(userToken.token);
     
     if(res) {
@@ -89,15 +89,15 @@ export async function CommonFn() {
       loginIconEl.style.backgroundImage = "";
 
       userAuth = await afterLoadUserAuth();
-      checkLogin(userAuth)
+      checkLogin(userAuth);
     }
   });
 
-  document.addEventListener('click', (e) => {
-    if(e.target.closest('.login')) return;
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".login")) return;
 
-    dropdownEl.classList.add('hidden');
-  })
+    dropdownEl.classList.add("hidden");
+  });
 
   ulEl.addEventListener('mouseover', e => {
     Array.from(ulEl.children).forEach((liEl) => {
@@ -114,33 +114,33 @@ export async function CommonFn() {
   });
 
   function checkLogin(userAuth) {
-    console.log(userAuth)
+    console.log(userAuth);
 
     //로그인 시 헤더에 이름 노출
-    if(userAuth) {
-      loginTextEl.innerHTML = /* html */`
+    if (userAuth) {
+      loginTextEl.innerHTML = /* html */ `
         ${userAuth.displayName} 님!
         <span class="material-symbols-outlined">
           arrow_drop_down
         </span>
         `;
-      loginEl.classList.add('logged-in')
+      loginEl.classList.add("logged-in");
     } else {
       loginTextEl.textContent = "Login";
-      loginIconEl.classList.remove('profile')
-      loginEl.classList.remove('logged-in')
+      loginIconEl.classList.remove("profile");
+      loginEl.classList.remove("logged-in");
     }
 
     //로그인 시 헤더에 프로필이미지 노출
-    if(userAuth && userAuth.profileImg) {
-      loginIconEl.classList.add('profile');
+    if (userAuth && userAuth.profileImg) {
+      loginIconEl.classList.add("profile");
       loginIconEl.style.backgroundImage = `url(${userAuth.profileImg})`;
     } else {
-      loginIconEl.classList.remove('profile')
+      loginIconEl.classList.remove("profile");
     }
   }
-    
-  if ( localStorage.getItem('cart') ) {
-    cartCountEl.textContent = JSON.parse(localStorage.getItem('cart')).length;
+
+  if (getItems("cart")) {
+    cartCountEl.textContent = getItems("cart").length;
   }
 }
