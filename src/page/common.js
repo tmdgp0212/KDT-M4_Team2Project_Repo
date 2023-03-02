@@ -55,6 +55,7 @@ export async function CommonFn() {
   const dropdownEl = document.querySelector('header .login .login--dropdown');
   const logoutEl = document.querySelector('header .login .login--dropdown .logout');
   const cartCountEl =  document.querySelector('header .cart .cart-count');
+  const ulEl = document.querySelector('header nav ul');
   
   let userAuth = await afterLoadUserAuth();
   checkLogin(userAuth)
@@ -99,6 +100,20 @@ export async function CommonFn() {
 
     dropdownEl.classList.add('hidden');
   })
+
+  ulEl.addEventListener('mouseover', e => {
+    Array.from(ulEl.children).forEach((liEl) => {
+      liEl.firstChild.classList.add('blur');
+    });
+
+    e.target.classList.remove('blur')
+  });
+
+  ulEl.addEventListener('mouseout', () => {
+    Array.from(ulEl.children).forEach((liEl) => {
+      liEl.firstChild.classList.remove('blur');
+    });
+  });
 
   function checkLogin(userAuth) {
     console.log(userAuth)
