@@ -71,7 +71,6 @@ export async function CommonFn() {
   });
 
   loginEl.addEventListener('click', async () => {
-    console.log('click')
     if(!userAuth) {
       router.navigate('/login');
       return;
@@ -82,8 +81,7 @@ export async function CommonFn() {
 
   logoutEl.addEventListener('click', async () => {
     const res = await userLogOut(userToken.token);
-    console.log(res)
-
+    
     if(res) {
       localStorage.removeItem('userToken');
       loginIconEl.classList.remove('profile');
