@@ -53,7 +53,6 @@ export async function CommonFn() {
   const loginIconEl = document.querySelector('header .login .icon');
   const loginTextEl = document.querySelector('header .login .login--text');
   const dropdownEl = document.querySelector('header .login .login--dropdown');
-  const logoutEl = document.querySelector('header .login .login--dropdown .logout');
   const cartCountEl =  document.querySelector('header .cart .cart-count');
   const ulEl = document.querySelector('header nav ul');
   
@@ -66,7 +65,21 @@ export async function CommonFn() {
     router.navigate(`/search/${inputEl.value}`);
   });
 
-  dropdownEl.addEventListener("click", (event) => {
+  dropdownEl.addEventListener("click", async (event) => {
+    if (event.target.className === "logout") {
+      const res = await userLogOut(userToken.token);
+
+      if(res) {
+        localStorage.removeItem('userToken');
+        loginIconEl.classList.remove('profile');
+        loginTextEl.textContent = "Login";
+        loginIconEl.style.backgroundImage = "";
+
+        userAuth = await afterLoadUserAuth();
+        checkLogin(userAuth);
+      }
+    }
+
     router.navigate(event.target.dataset.href);
   });
 
@@ -77,20 +90,6 @@ export async function CommonFn() {
     }
 
     dropdownEl.classList.toggle("hidden");
-  });
-
-  logoutEl.addEventListener("click", async () => {
-    const res = await userLogOut(userToken.token);
-    
-    if(res) {
-      localStorage.removeItem('userToken');
-      loginIconEl.classList.remove('profile');
-      loginTextEl.textContent = "Login";
-      loginIconEl.style.backgroundImage = "";
-
-      userAuth = await afterLoadUserAuth();
-      checkLogin(userAuth);
-    }
   });
 
   document.addEventListener("click", (e) => {
