@@ -1,3 +1,4 @@
+
 # 2조 프로젝트 
 
 - 프로젝트명: 2조 프로젝트
@@ -12,9 +13,11 @@
 - 테스트용 마스터 페이지 가는 법
   - `fotter`  부분에 있는 `* master page` 를 클릭하면 마스터 페이지로 이동합니다.
 
+
 ## 프로젝트 소개
 
 안녕하세요 저희는 2조입니다. 저희가 만든 사이트는 NEXT_FURNITURE 라는 가구 쇼핑몰을 만들었습니다.
+
 
 사이트의 전체적인 모습
 
@@ -50,6 +53,7 @@
 |                    [최환석](https://github.com/BeeMOre32)                     |                   [장화현](https://github.com/janghwahyun/)                   |                     [조승혜](https://github.com/tmdgp0212)                     |                     [정윤조](https://github.com/jyj1111)                      |                     [김민기](https://github.com/minki-dev)                     |
 |              마스터 페이지 <br/> 서버리스 펑션 및 기본 api구조 제작 <br/> 디버깅 담당              |        로그인 페이지  </br> 회원가입  페이지                              |               메인페이지 <br/> 검색 페이지 및 필터링 <br/> 페이지 전체적인 레이아웃 수정 <br/> 마이 페이지/나의 정보 페이지               |                           장바구니 페이지 <br/> 결제 페이지                            |                            마이 페이지/나의 주문 페이지 <br/>마이 페이지/나의 계좌 페이지                           |
 
+
 ### 프로젝트의 기능구현 사항
 
 📌 필수사항
@@ -70,6 +74,7 @@
 - Deploy: `Vercel`
 - Bundler: `Parcel`
 - serverless function: `Vercel Serverless Function`
+
 
 ### 프로젝트 구조
 
@@ -94,7 +99,14 @@
 │   ├── router.js
 ```
 
-### 프로젝트 기능
+
+## 프로젝트 실행 방법
+
+- 먼저 패키지를 모두 다운로드 받습니다 `npm install`
+- 그 다음 vercel Cli를 설치합니다 `npm i -g vercel`
+- vercel Cli를 통해 설정한 후 `vercel dev` 명령어를 통해 실행합니다.
+
+## 프로젝트 작업한 목록
 
 - 회원가입 및 로그인 페이지
   - 회원가입 페이지에서는 이메일, 비밀번호, 이름, 전화번호를 입력받아 회원가입을 할 수 있습니다.
